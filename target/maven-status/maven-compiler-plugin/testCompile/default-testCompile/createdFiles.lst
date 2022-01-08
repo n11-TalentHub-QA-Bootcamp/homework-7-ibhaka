@@ -1,0 +1,5 @@
+common\Page_BasePage.class
+steps\GoogleHome.class
+testng\HomePageTestCases.class
+testrunner\TestRunner_GoogleHomePage.class
+pages\Page_GoogleHomepage.class
