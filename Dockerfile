@@ -32,11 +32,24 @@ RUN curl https://chromedriver.storage.googleapis.com/$CHROMDRIVER_VERSION/chrome
     && rm /tmp/chromedriver.zip
 RUN chmod +x /app/bin/chromedriver
 #Step 4 : Install firefox
-RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.mozilla.net/pub/firefox/releases/$FIREFOX_VERSION/linux-x86_64/en-US/firefox-$FIREFOX_VERSION.tar.bz2 \
-  && bunzip2 /tmp/firefox.tar.bz2 \
-  && tar xvf /tmp/firefox.tar \
-  && mv /firefox /opt/firefox-$FIREFOX_VERSION \
-  && ln -s /opt/firefox-$FIREFOX_VERSION/firefox /usr/bin/firefox
+#RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.mozilla.net/pub/firefox/releases/$FIREFOX_VERSION/linux-x86_64/en-US/firefox-$FIREFOX_VERSION.tar.bz2 \
+#  && bunzip2 /tmp/firefox.tar.bz2 \
+#  && tar xvf /tmp/firefox.tar \
+#  && mv /firefox /opt/firefox-$FIREFOX_VERSION \
+# && ln -s /opt/firefox-$FIREFOX_VERSION/firefox /usr/bin/firefox
+
+
+#mozilla install
+RUN apt install wget -y
+RUN wget https://github.com/mozilla/geckodriver/releases/download/v0.29.0/geckodriver-v0.29.0-linux64.tar.gz
+RUN tar -xvzf geckodriver-v0.29.0-linux64.tar.gz
+RUN chmod +x geckodriver
+RUN mv geckodriver /app
+RUN apt install firefox -y
+RUN export MOZ_HEADLESS=1\
+System.setProperty("webdriver.gecko.driver","/app/geckodriver"); \
+    
+
 #Step 5: Install Geckodriver
 RUN wget https://github.com/mozilla/geckodriver/releases/download/v$FIREFOXDRIVER_VERSION/geckodriver-v$FIREFOXDRIVER_VERSION-linux64.tar.gz
 RUN tar -xvzf geckodriver-v0.29.0-linux64.tar.gz
